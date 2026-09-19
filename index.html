@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oráculo Zéfiro - Guru Místico & Astral</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Marcellus&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f5f0fa 0%, #ede3f7 50%, #f9f5ed 100%);
+      --panel-bg: rgba(255, 255, 255, 0.88);
+      --panel-border: rgba(184, 134, 11, 0.35);
+      --gold: #b8860b;
+      --gold-dark: #8c6503;
+      --gold-light: #fff8dc;
+      --purple: #5e2780;
+      --purple-dark: #371252;
+      --text-main: #1f1a29;
+      --text-muted: #5e546b;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Marcellus', serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .app-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1040px;
+      height: 94vh;
+      max-height: 900px;
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel-bg);
+      border: 1.5px solid var(--panel-border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius);
+      box-shadow: 0 15px 45px rgba(65, 20, 95, 0.12);
+      overflow: hidden;
+    }
+
+    header {
+      padding: 14px 22px;
+      border-bottom: 1.5px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      font-size: 2.2rem;
+      color: var(--gold);
+      animation: pulseGold 3.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseGold {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--gold)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 10px var(--gold)); }
+    }
+
+    .brand h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.25rem;
+      letter-spacing: 1.5px;
+      color: var(--purple-dark);
+    }
+
+    .brand p {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-icon {
+      background: #fff;
+      border: 1px solid var(--panel-border);
+      color: var(--purple-dark);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.25s;
+    }
+
+    .btn-icon:hover {
+      background: var(--gold-light);
+      border-color: var(--gold);
+      transform: translateY(-1px);
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* TELA 1: SANTUÁRIO */
+    .portal-view {
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .portal-hero {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(247,238,255,0.85));
+      border: 1.5px solid var(--panel-border);
+      padding: 20px;
+      border-radius: 14px;
+    }
+
+    .portal-hero h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.35rem;
+      color: var(--purple-dark);
+      margin-bottom: 6px;
+    }
+
+    .portal-hero p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 16px auto;
+    }
+
+    .btn-roulette {
+      background: linear-gradient(135deg, #7b2cbf, #5e2780);
+      color: #fff;
+      border: 2px solid var(--gold);
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(94, 39, 128, 0.25);
+      transition: all 0.3s;
+    }
+
+    .btn-roulette:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 25px rgba(184, 134, 11, 0.35);
+    }
+
+    .category-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      color: var(--purple-dark);
+      border-bottom: 1px solid var(--panel-border);
+      padding-bottom: 6px;
+      letter-spacing: 1px;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+    }
+
+    .portal-card {
+      background: #fff;
+      border: 1px solid rgba(184, 134, 11, 0.22);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .portal-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(184, 134, 11, 0.16);
+      background: #fffdf7;
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-head .icon {
+      font-size: 1.5rem;
+    }
+
+    .card-head h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem;
+      color: var(--purple-dark);
+    }
+
+    .portal-card p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* TELA 2: CÂMARA DE CHAT */
+    .chat-subhead {
+      background: rgba(255, 255, 255, 0.9);
+      border-bottom: 1px solid var(--panel-border);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btn-back-hub {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--purple-dark);
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-back-hub:hover {
+      background: var(--gold-light);
+      border-color: var(--gold);
+    }
+
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      max-width: 82%;
+      display: flex;
+      flex-direction: column;
+      animation: fadeInMsg 0.35s ease;
+    }
+
+    @keyframes fadeInMsg {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user { align-self: flex-end; }
+    .message.oracle { align-self: flex-start; }
+
+    .bubble {
+      padding: 14px 18px;
+      border-radius: 16px;
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
+    .user .bubble {
+      background: linear-gradient(135deg, #5e2780, #42165c);
+      color: #fff;
+      border-bottom-right-radius: 4px;
+      box-shadow: 0 4px 14px rgba(94, 39, 128, 0.2);
+    }
+
+    .oracle .bubble {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--panel-border);
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .bubble p { margin-bottom: 8px; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .bubble strong { color: var(--purple-dark); font-weight: 600; }
+    .bubble blockquote {
+      border-left: 3px solid var(--gold);
+      padding-left: 10px;
+      margin: 8px 0;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+    .user .meta { text-align: right; }
+
+    .oracle-thinking {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--purple-dark);
+      padding: 6px 14px;
+      background: #fff;
+      border-radius: 20px;
+      margin: 0 auto 8px auto;
+      border: 1px solid var(--panel-border);
+    }
+
+    .input-wrapper {
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-top: 1px solid var(--panel-border);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .input-box {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--panel-border);
+      border-radius: 25px;
+      padding: 12px 18px;
+      font-size: 0.95rem;
+      outline: none;
+      color: var(--text-main);
+    }
+
+    .input-box:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 10px rgba(184, 134, 11, 0.2);
+    }
+
+    .btn-send {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s;
+    }
+
+    .btn-send:hover {
+      transform: scale(1.06);
+    }
+
+    /* MODAL BASE */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(26, 12, 38, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-content {
+      background: #ffffff;
+      border: 1.5px solid var(--gold);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95rem;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    /* ESTILOS ESPECÍFICOS DOS RITUAIS */
+    .tarot-card-box {
+      width: 150px;
+      height: 230px;
+      margin: 15px auto;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .tarot-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    .tarot-inner.revealed { transform: rotateY(180deg); }
+
+    .t-front, .t-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      border-radius: 12px;
+      border: 2px solid var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .t-back {
+      background: linear-gradient(135deg, #371252, #1f0830);
+      color: var(--gold);
+      font-size: 2.5rem;
+    }
+
+    .t-front {
+      background: #fff;
+      transform: rotateY(180deg);
+    }
+
+    .buzios-altar {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 15px auto;
+      max-width: 240px;
+    }
+
+    .buzio-shell {
+      height: 70px;
+      background: #fbf5e6;
+      border-radius: 50% 50% 40% 40% / 60% 60% 40% 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.8rem;
+      border: 2px solid #b89849;
+    }
+
+    .buzio-shell.fechado {
+      background: #7a6344;
+      color: #fff;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--purple-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--panel-border);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    .field input:focus, .field select:focus {
+      border-color: var(--gold);
+    }
+
+    @media (max-width: 768px) {
+      .app-wrapper {
+        margin: 0;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        border: none;
+      }
+      .message { max-width: 92%; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="stars-canvas"></canvas>
+
+  <div class="app-wrapper">
+    <header>
+      <div class="brand">
+        <div class="brand-icon">✹</div>
+        <div>
+          <h1>ORÁCULO ZÉFIRO</h1>
+          <p>Guru Astral & Arcanos Cósmicos</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="btn-sound" title="Alternar Som">🔔</button>
+        <button class="btn-icon" id="btn-clear" title="Limpar Conversa">🧹</button>
+        <button class="btn-icon" id="btn-settings" title="Configurações de Chave">⚙️</button>
+      </div>
+    </header>
+
+    <!-- TELA 1: SANTUÁRIO DE RITUAIS -->
+    <main class="screen active" id="screen-hub">
+      <div class="portal-view">
+        <div class="portal-hero">
+          <h2>Bem-vindo aos Portais do Destino</h2>
+          <p>Selecione um método oracular ancestral para consultar os caminhos, ou entregue sua sorte à sabedoria do universo:</p>
+          <button class="btn-roulette" onclick="triggerRoulette()">
+            <span>🎲</span> ROLETA DO DESTINO (RITUAL ALEATÓRIO)
+          </button>
+        </div>
+
+        <h3 class="category-title">Grandes Oráculos Clássicos</h3>
+        <div class="portal-grid">
+          <div class="portal-card" onclick="openTarotModal()">
+            <div class="card-head"><span class="icon">🃏</span><h4>Tarot Maior</h4></div>
+            <p>Tire um arcano sagrado para iluminar sombras e potenciais ocultos.</p>
+          </div>
+          <div class="portal-card" onclick="openBuziosModal()">
+            <div class="card-head"><span class="icon">🐚</span><h4>4 Búzios (Odùs)</h4></div>
+            <p>Conchas sagradas com respostas ancestrais de Aláfia, Ejife e outros.</p>
+          </div>
+          <div class="portal-card" onclick="openHoroscopeModal()">
+            <div class="card-head"><span class="icon">✨</span><h4>Horóscopo do Dia</h4></div>
+            <p>Trânsitos astrais, cristais e conselhos para os 12 signos do zodíaco.</p>
+          </div>
+          <div class="portal-card" onclick="openRunesModal()">
+            <div class="card-head"><span class="icon">ᚱ</span><h4>Runas Nórdicas</h4></div>
+            <p>Símbolos ancestrais cravados em pedra para orientação firme.</p>
+          </div>
+          <div class="portal-card" onclick="openLenormandModal()">
+            <div class="card-head"><span class="icon">🎴</span><h4>Baralho Cigano</h4></div>
+            <p>Tiragem rápida de 3 cartas: passado, presente e tendência futura.</p>
+          </div>
+          <div class="portal-card" onclick="openIChingModal()">
+            <div class="card-head"><span class="icon">☯️</span><h4>I Ching Ancestral</h4></div>
+            <p>As 3 moedas da mutação e o oráculo clássico dos hexagramas.</p>
+          </div>
+        </div>
+
+        <h3 class="category-title">Respostas Diretas & Revelações</h3>
+        <div class="portal-grid">
+          <div class="portal-card" onclick="askCrystalBall()">
+            <div class="card-head"><span class="icon">🔮</span><h4>Bola de Cristal</h4></div>
+            <p>Respostas diretas de Sim ou Não para dúvidas imediatas.</p>
+          </div>
+          <div class="portal-card" onclick="askPendulum()">
+            <div class="card-head"><span class="icon">🪬</span><h4>Pêndulo Sagrado</h4></div>
+            <p>Oscilação radiestésica para dúvidas que exigem confirmação.</p>
+          </div>
+          <div class="portal-card" onclick="breakFortuneCookie()">
+            <div class="card-head"><span class="icon">🥠</span><h4>Biscoito Cósmico</h4></div>
+            <p>Um provérbio ou presságio instantâneo do universo para seu dia.</p>
+          </div>
+          <div class="portal-card" onclick="readCoffeeCup()">
+            <div class="card-head"><span class="icon">☕</span><h4>Cafeomancia</h4></div>
+            <p>Símbolos e figuras desvendados através do desenho da borra.</p>
+          </div>
+        </div>
+
+        <h3 class="category-title">Autoconhecimento & Proteção</h3>
+        <div class="portal-grid">
+          <div class="portal-card" onclick="startDirectPrompt('Decifre este sonho misterioso que tive: ')">
+            <div class="card-head"><span class="icon">🌙</span><h4>Decifrar Sonhos</h4></div>
+            <p>Interpretação arquetípica das mensagens do inconsciente.</p>
+          </div>
+          <div class="portal-card" onclick="openChakrasModal()">
+            <div class="card-head"><span class="icon">🧿</span><h4>Alinhar 7 Chakras</h4></div>
+            <p>Diagnóstico de centros energéticos, frequências e harmonização.</p>
+          </div>
+          <div class="portal-card" onclick="openArchangelsModal()">
+            <div class="card-head"><span class="icon">👼</span><h4>Arcanjos Protetores</h4></div>
+            <p>Invoque a bênção e o raio de proteção de São Miguel ou Gabriel.</p>
+          </div>
+          <div class="portal-card" onclick="startDirectPrompt('Qual banho de ervas e amuleto devo usar para descarrego e proteção?')">
+            <div class="card-head"><span class="icon">🌿</span><h4>Banho de Ervas</h4></div>
+            <p>Receitas consagradas da natureza para limpeza de aura e caminhos.</p>
+          </div>
+          <div class="portal-card" onclick="startDirectPrompt('Quero uma conversa livre e profunda sobre minha espiritualidade.')">
+            <div class="card-head"><span class="icon">🕯️</span><h4>Conversa Direta</h4></div>
+            <p>Abra seu coração diretamente com o mestre Zéfiro.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- TELA 2: CÂMARA DE DIÁLOGO COM ZÉFIRO -->
+    <main class="screen" id="screen-chat">
+      <div class="chat-subhead">
+        <button class="btn-back-hub" onclick="switchToHub()">← Escolher Outro Ritual</button>
+        <span style="font-size: 0.8rem; color: var(--gold-dark); font-weight: 600;">Câmara Astral de Zéfiro</span>
+      </div>
+
+      <div class="chat-container" id="chat-messages">
+        <div class="message oracle">
+          <div class="bubble">
+            <p>Saudações, alma viajante. Os portais cósmicos estão abertos. Apresente sua dúvida ou confie no que o oráculo acabou de manifestar para você.</p>
+          </div>
+          <div class="meta">Zéfiro • Agora</div>
+        </div>
+      </div>
+
+      <div class="oracle-thinking" id="thinking-indicator">
+        <span>✦</span> <span id="thinking-text">Sintonizando frequências astrais...</span>
+      </div>
+
+      <div class="input-wrapper">
+        <input type="text" id="user-input" class="input-box" placeholder="Digite sua dúvida aprofundada..." autocomplete="off">
+        <button class="btn-send" id="btn-send" title="Enviar Mensagem">✧</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL: CONFIGURAÇÃO DE CHAVE -->
+  <div class="modal" id="modal-settings">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-settings')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 8px;">⚙️ Conexão com o Gemini</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
+        Para rodar 100% no seu GitHub Pages, informe sua chave. Ela fica guardada apenas no seu próprio navegador via <code>localStorage</code>.
+      </p>
+
+      <div style="background: var(--gold-light); border: 1px solid var(--gold); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+        <p style="font-size: 0.8rem; color: var(--gold-dark); margin-bottom: 8px; font-weight: 600;">
+          Obtenha gratuitamente no Google AI Studio:
+        </p>
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" style="display: block; text-align: center; background: var(--purple-dark); color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: bold;">
+          🔑 Criar Chave no Google AI Studio
+        </a>
+      </div>
+
+      <div class="field">
+        <label>Chave da API</label>
+        <input type="password" id="input-api-key" placeholder="AIzaSy...">
+      </div>
+
+      <div class="field">
+        <label>Modelo Preferencial</label>
+        <select id="select-model">
+          <option value="gemini-1.5-flash">Gemini 1.5 Flash (Mais Estável & Rápido)</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash (Moderno)</option>
+          <option value="gemini-1.5-pro">Gemini 1.5 Pro (Mais Profundo)</option>
+        </select>
+      </div>
+
+      <button class="btn-action" onclick="saveSettings()">Salvar Configurações</button>
+    </div>
+  </div>
+
+  <!-- MODAL: TAROT -->
+  <div class="modal" id="modal-tarot">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('modal-tarot')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark);">🃏 Arcano Maior</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">Toque na lâmina sagrada para revelar o conselho dos arcanos:</p>
+
+      <div class="tarot-card-box" onclick="flipTarotCard()">
+        <div class="tarot-inner" id="tarot-inner">
+          <div class="t-back">✦</div>
+          <div class="t-front">
+            <div id="tarot-glyph" style="font-size: 3rem; margin-bottom: 8px;">🎴</div>
+            <h4 id="tarot-name" style="font-family: 'Cinzel', serif; color: var(--purple-dark);">O Arcano</h4>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-action" id="btn-tarot-chat" style="display: none;" onclick="sendTarotToChat()">Aprofundar com Zéfiro</button>
+    </div>
+  </div>
+
+  <!-- MODAL: BÚZIOS -->
+  <div class="modal" id="modal-buzios">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('modal-buzios')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark);">🐚 Lançamento dos 4 Búzios</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Concentre sua pergunta e jogue as conchas sagradas:</p>
+
+      <div class="buzios-altar">
+        <div class="buzio-shell" id="bz1">?</div>
+        <div class="buzio-shell" id="bz2">?</div>
+        <div class="buzio-shell" id="bz3">?</div>
+        <div class="buzio-shell" id="bz4">?</div>
+      </div>
+
+      <div id="buzios-result" style="font-size: 0.9rem; color: var(--gold-dark); font-weight: 600; margin: 12px 0;"></div>
+      <button class="btn-action" onclick="lancarBuzios()">Lançar Conchas</button>
+      <button class="btn-action" id="btn-buzios-chat" style="display: none;" onclick="sendBuziosToChat()">Interpretar com Zéfiro</button>
+    </div>
+  </div>
+
+  <!-- MODAL: HORÓSCOPO -->
+  <div class="modal" id="modal-horoscope">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-horoscope')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 10px;">✨ Escolha seu Signo</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Áries ♈')">♈ Áries</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Touro ♉')">♉ Touro</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Gêmeos ♊')">♊ Gêmeos</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Câncer ♋')">♋ Câncer</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Leão ♌')">♌ Leão</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Virgem ♍')">♍ Virgem</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Libra ♎')">♎ Libra</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Escorpião ♏')">♏ Escorpião</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Sagitário ♐')">♐ Sagitário</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Capricórnio ♑')">♑ Capricórnio</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Aquário ♒')">♒ Aquário</button>
+        <button class="btn-action" style="padding: 8px; font-size: 0.8rem;" onclick="consultarSigno('Peixes ♓')">♓ Peixes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RUNAS -->
+  <div class="modal" id="modal-runes">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('modal-runes')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark);">ᚱ Runa Nórdica</h2>
+      <div id="rune-display" style="font-size: 3.5rem; margin: 15px 0; color: var(--purple-dark);">ᛗ</div>
+      <div id="rune-name" style="font-weight: bold; color: var(--gold-dark); margin-bottom: 10px;">Mannaz (A Humanidade)</div>
+      <button class="btn-action" onclick="sortearRuna()">Retirar Nova Runa</button>
+      <button class="btn-action" onclick="sendRuneToChat()">Ver Interpretação Completa</button>
+    </div>
+  </div>
+
+  <!-- MODAL: LENORMAND -->
+  <div class="modal" id="modal-lenormand">
+    <div class="modal-content" style="text-align: center;">
+      <button class="modal-close" onclick="closeModal('modal-lenormand')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark);">🎴 Baralho Cigano (3 Cartas)</h2>
+      <div id="lenormand-cards" style="display: flex; justify-content: space-around; margin: 20px 0; font-size: 1.8rem;">
+        <div><span>🐎</span><p style="font-size: 0.75rem;">O Cavaleiro</p></div>
+        <div><span>🍀</span><p style="font-size: 0.75rem;">O Trevo</p></div>
+        <div><span>⚓</span><p style="font-size: 0.75rem;">A Âncora</p></div>
+      </div>
+      <button class="btn-action" onclick="sortearLenormand()">Embaralhar e Tirar 3 Cartas</button>
+      <button class="btn-action" onclick="sendLenormandToChat()">Interpretar com Zéfiro</button>
+    </div>
+  </div>
+
+  <!-- MODAL: CHAKRAS -->
+  <div class="modal" id="modal-chakras">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-chakras')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 12px;">🧿 Harmonização dos Chakras</h2>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="btn-action" style="background: #9d4edd;" onclick="consultarChakra('Chakra Coronário (Sahasrara)')">👑 Coronário (Espiritualidade)</button>
+        <button class="btn-action" style="background: #3a0ca3;" onclick="consultarChakra('Chakra Frontal (Ajna)')">👁️ Frontal / 3º Olho (Intuição)</button>
+        <button class="btn-action" style="background: #4361ee;" onclick="consultarChakra('Chakra Laríngeo (Vishuddha)')">🗣️ Laríngeo (Comunicação)</button>
+        <button class="btn-action" style="background: #2ec4b6;" onclick="consultarChakra('Chakra Cardíaco (Anahata)')">💚 Cardíaco (Amor & Cura)</button>
+        <button class="btn-action" style="background: #ffb703;" onclick="consultarChakra('Chakra Plexo Solar (Manipura)')">☀️ Plexo Solar (Poder Pessoal)</button>
+        <button class="btn-action" style="background: #fb8500;" onclick="consultarChakra('Chakra Sacral (Svadhisthana)')">🔥 Sacral (Criatividade & Emoção)</button>
+        <button class="btn-action" style="background: #d62828;" onclick="consultarChakra('Chakra Raiz (Muladhara)')">🌱 Raiz (Segurança & Estabilidade)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ARCANJOS -->
+  <div class="modal" id="modal-archangels">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('modal-archangels')">✕</button>
+      <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 12px;">👼 Arcanjos Protetores</h2>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="btn-action" onclick="consultarArcanjo('São Miguel Arcanjo (Raio Azul - Proteção e Corte de Nós)')">🗡️ São Miguel (Corte de Laços & Proteção)</button>
+        <button class="btn-action" onclick="consultarArcanjo('São Rafael Arcanjo (Raio Verde - Cura e Alívio)')">🌿 São Rafael (Cura do Corpo e da Mente)</button>
+        <button class="btn-action" onclick="consultarArcanjo('São Gabriel Arcanjo (Raio Branco - Clareza e Boas Notícias)')">🎺 São Gabriel (Clareza de Propósito)</button>
+        <button class="btn-action" onclick="consultarArcanjo('Arcanjo Uriel (Raio Rubi-Dourado - Sabedoria e Paz)')">🕯️ Arcanjo Uriel (Luz nas Trevas da Dúvida)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       1. ESTADO & CONSTANTES
+    ========================================================= */
+    const STORAGE_KEY = 'zefiro_gemini_api_key';
+    const STORAGE_MODEL = 'zefiro_gemini_model';
+
+    let apiKey = localStorage.getItem(STORAGE_KEY) || '';
+    let currentModel = localStorage.getItem(STORAGE_MODEL) || 'gemini-1.5-flash';
+
+    // Lista de contingência com modelos compatíveis
+    const FALLBACK_MODELS = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+
+    let chatHistory = [];
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    const SYSTEM_INSTRUCTION = `Você é Zéfiro, um guru místico ancestral e mestre oracular (Tarot, Búzios, Horóscopo, Runas e Sonhos).
+Seu tom é acolhedor, sereno, poético e enigmático, trazendo reflexões práticas sobre livre-arbítrio, autoconhecimento e paz.
+Responda usando Markdown claro com parágrafos bem estruturados, negritos e listas quando conveniente.`;
+
+    /* =========================================================
+       2. ELEMENTOS DOM
+    ========================================================= */
+    const screenHub = document.getElementById('screen-hub');
+    const screenChat = document.getElementById('screen-chat');
+    const chatContainer = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+    const btnSend = document.getElementById('btn-send');
+    const thinkingIndicator = document.getElementById('thinking-indicator');
+    const thinkingText = document.getElementById('thinking-text');
+    const inputApiKey = document.getElementById('input-api-key');
+    const selectModel = document.getElementById('select-model');
+
+    inputApiKey.value = apiKey;
+    selectModel.value = currentModel;
+
+    function switchToChat() {
+      screenHub.classList.remove('active');
+      screenChat.classList.add('active');
+      setTimeout(() => userInput.focus(), 150);
+    }
+
+    function switchToHub() {
+      screenChat.classList.remove('active');
+      screenHub.classList.add('active');
+    }
+
+    /* =========================================================
+       3. SISTEMA DE ÁUDIO (Tigela Tibetana Sintetizada)
+    ========================================================= */
+    function playChime(freq = 432, duration = 2.0) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.18, audioCtx.currentTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {
+        console.warn('Áudio indisponível:', e);
+      }
+    }
+
+    document.getElementById('btn-sound').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('btn-sound').textContent = soundEnabled ? '🔔' : '🔕';
+      if (soundEnabled) playChime(528, 1.2);
+    });
+
+    /* =========================================================
+       4. REQUISIÇÃO À API COM RESILIÊNCIA & FALLBACK
+    ========================================================= */
+    async function callGeminiWithFallback(promptText) {
+      // Cria a lista de tentativas começando pelo modelo ativo
+      const modelsToTry = [currentModel, ...FALLBACK_MODELS.filter(m => m !== currentModel)];
+
+      let lastError = null;
+
+      for (let i = 0; i < modelsToTry.length; i++) {
+        const modelCandidate = modelsToTry[i];
+        thinkingText.textContent = i === 0 
+          ? "Sintonizando frequências astrais..." 
+          : `Reconectando através de novo canal (${modelCandidate})...`;
+
+        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${modelCandidate}:generateContent?key=${apiKey}`;
+
+        const payload = {
+          systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION }] },
+          contents: chatHistory,
+          generationConfig: {
+            temperature: 0.8,
+            maxOutputTokens: 1000
+          }
+        };
+
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.json();
+
+          if (response.ok && data.candidates?.[0]?.content?.parts?.[0]?.text) {
+            return data.candidates[0].content.parts[0].text;
+          }
+
+          // Se deu 503 (High Demand) ou 429 (Rate Limit), tenta o próximo modelo
+          if (response.status === 503 || response.status === 429) {
+            console.warn(`Modelo ${modelCandidate} sobrecarregado (${response.status}). Tentando modelo alternativo...`);
+            await new Promise(r => setTimeout(r, 1200)); // Pequena pausa
+            continue;
+          }
+
+          throw new Error(data.error?.message || 'Falha ao consultar os oráculos.');
+        } catch (err) {
+          lastError = err;
+          console.warn(`Falha na tentativa com ${modelCandidate}:`, err);
+        }
+      }
+
+      throw lastError || new Error('Os canais astrais estão em silêncio temporário. Tente novamente em instantes.');
+    }
+
+    async function sendMessage(textToSend = null) {
+      const text = (textToSend !== null ? textToSend : userInput.value).trim();
+      if (!text) return;
+
+      if (!apiKey) {
+        alert('Por favor, configure sua chave da API do Gemini nas configurações (⚙️).');
+        openModal('modal-settings');
+        return;
+      }
+
+      appendMessage(text, 'user');
+      if (textToSend === null) userInput.value = '';
+
+      thinkingIndicator.style.display = 'flex';
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      playChime(396, 1.2);
+
+      chatHistory.push({ role: 'user', parts: [{ text }] });
+
+      try {
+        const reply = await callGeminiWithFallback(text);
+        chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+        appendMessage(reply, 'oracle');
+        playChime(528, 2.2);
+      } catch (err) {
+        appendMessage(`⚠️ **Interrupção nas Linhas Astrais:** ${err.message}`, 'oracle');
+      } finally {
+        thinkingIndicator.style.display = 'none';
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      const parsedHtml = marked.parse(text);
+      const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      msg.innerHTML = `
+        <div class="bubble">${parsedHtml}</div>
+        <div class="meta">${sender === 'user' ? 'Você' : 'Zéfiro'} • ${time}</div>
+      `;
+      chatContainer.appendChild(msg);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    btnSend.addEventListener('click', () => sendMessage());
+    userInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    document.getElementById('btn-clear').addEventListener('click', () => {
+      if (confirm('Deseja purificar e reiniciar todo o diálogo com o Oráculo?')) {
+        chatHistory = [];
+        chatContainer.innerHTML = '';
+        appendMessage('As águas do tempo foram purificadas. Apresente sua nova questão ao cosmos.', 'oracle');
+      }
+    });
+
+    document.getElementById('btn-settings').addEventListener('click', () => openModal('modal-settings'));
+
+    function saveSettings() {
+      apiKey = inputApiKey.value.trim();
+      currentModel = selectModel.value;
+      localStorage.setItem(STORAGE_KEY, apiKey);
+      localStorage.setItem(STORAGE_MODEL, currentModel);
+      closeModal('modal-settings');
+      alert('Sintonização concluída com sucesso!');
+    }
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    function startDirectPrompt(prefix) {
+      switchToChat();
+      userInput.value = prefix;
+      userInput.focus();
+    }
+
+    /* =========================================================
+       5. ROLETA DO DESTINO & RITUAIS INTERATIVOS
+    ========================================================= */
+    function triggerRoulette() {
+      const rituals = [
+        openTarotModal,
+        openBuziosModal,
+        openHoroscopeModal,
+        openRunesModal,
+        openLenormandModal,
+        askCrystalBall,
+        askPendulum,
+        breakFortuneCookie,
+        readCoffeeCup
+      ];
+      playChime(639, 1.5);
+      const chosen = rituals[Math.floor(Math.random() * rituals.length)];
+      chosen();
+    }
+
+    // TAROT
+    const tarotDeck = [
+      { name: "O Louco (0)", glyph: "🃏" },
+      { name: "O Mago (I)", glyph: "🪄" },
+      { name: "A Sacerdotisa (II)", glyph: "🌙" },
+      { name: "A Imperatriz (III)", glyph: "👑" },
+      { name: "O Imperador (IV)", glyph: "🏛️" },
+      { name: "O Eremita (IX)", glyph: "🏮" },
+      { name: "A Roda da Fortuna (X)", glyph: "☸️" },
+      { name: "A Força (XI)", glyph: "🦁" },
+      { name: "A Morte (XIII)", glyph: "🦋" },
+      { name: "A Estrela (XVII)", glyph: "⭐" },
+      { name: "O Sol (XIX)", glyph: "☀️" },
+      { name: "O Mundo (XXI)", glyph: "🪐" }
+    ];
+    let pulledTarot = null;
+
+    function openTarotModal() {
+      document.getElementById('tarot-inner').classList.remove('revealed');
+      document.getElementById('btn-tarot-chat').style.display = 'none';
+      openModal('modal-tarot');
+    }
+
+    function flipTarotCard() {
+      const inner = document.getElementById('tarot-inner');
+      if (inner.classList.contains('revealed')) return;
+      pulledTarot = tarotDeck[Math.floor(Math.random() * tarotDeck.length)];
+      document.getElementById('tarot-glyph').textContent = pulledTarot.glyph;
+      document.getElementById('tarot-name').textContent = pulledTarot.name;
+      inner.classList.add('revealed');
+      document.getElementById('btn-tarot-chat').style.display = 'block';
+      playChime(528, 1.5);
+    }
+
+    function sendTarotToChat() {
+      closeModal('modal-tarot');
+      switchToChat();
+      sendMessage(`Tirei a lâmina sagrada do Tarot: **${pulledTarot.name}**. O que este arcano revela sobre meu momento atual e quais advertências ele me traz?`);
+    }
+
+    // BÚZIOS
+    let lastBuziosCount = null;
+    function openBuziosModal() {
+      openModal('modal-buzios');
+      document.getElementById('buzios-result').textContent = "";
+      document.getElementById('btn-buzios-chat').style.display = 'none';
+      ['bz1','bz2','bz3','bz4'].forEach(id => {
+        const el = document.getElementById(id);
+        el.className = 'buzio-shell';
+        el.textContent = '?';
+      });
+    }
+
+    function lancarBuzios() {
+      playChime(432, 1.5);
+      let openCount = 0;
+      for (let i = 1; i <= 4; i++) {
+        const el = document.getElementById('bz' + i);
+        const isOpen = Math.random() > 0.5;
+        if (isOpen) {
+          openCount++;
+          el.className = 'buzio-shell';
+          el.textContent = '◯ Aberto';
+        } else {
+          el.className = 'buzio-shell fechado';
+          el.textContent = '✕ Fechado';
+        }
+      }
+      lastBuziosCount = openCount;
+      const names = {
+        4: "Aláfia (4 Abertos) - Sim pleno, bênção e luz máxima!",
+        3: "Etawa (3 Abertos) - Vitória que exige insistência e cautela.",
+        2: "Ejife (2 Abertos, 2 Fechados) - Certeza, firmeza e verdade inabalável.",
+        1: "Okanran (1 Aberto) - Não, aviso de turbulência e necessidade de silêncio.",
+        0: "Oyekun (4 Fechados) - Resposta oculta, recolhimento e oração."
+      };
+      document.getElementById('buzios-result').textContent = names[openCount];
+      document.getElementById('btn-buzios-chat').style.display = 'block';
+    }
+
+    function sendBuziosToChat() {
+      closeModal('modal-buzios');
+      switchToChat();
+      const odus = ["Oyekun (0 abertos)", "Okanran (1 aberto)", "Ejife (2 abertos)", "Etawa (3 abertos)", "Aláfia (4 abertos)"];
+      sendMessage(`Lancei os 4 búzios e obtive a caída: **${odus[lastBuziosCount]}**. Como o oráculo interpreta esse sinal ancestral para o meu caminho?`);
+    }
+
+    // HORÓSCOPO
+    function openHoroscopeModal() { openModal('modal-horoscope'); }
+    function consultarSigno(signo) {
+      closeModal('modal-horoscope');
+      switchToChat();
+      sendMessage(`Qual é o panorama astral, cristal protetor e mensagem das estrelas para o signo de **${signo}** hoje?`);
+    }
+
+    // RUNAS
+    const runesList = [
+      { glyph: "ᚠ", name: "Fehu (Riqueza & Abundância)" },
+      { glyph: "ᚢ", name: "Uruz (Força Primordial & Saúde)" },
+      { glyph: "ᚨ", name: "Ansuz (Voz dos Deuses & Sabedoria)" },
+      { glyph: "ᚱ", name: "Raidho (Jornadas & Destino em Movimento)" },
+      { glyph: "ᚲ", name: "Kenaz (Chama Interior & Revelação)" },
+      { glyph: "ᚷ", name: "Gebo (Dons, Alianças & Equilíbrio)" }
+    ];
+    let selectedRune = runesList[0];
+
+    function openRunesModal() {
+      sortearRuna();
+      openModal('modal-runes');
+    }
+    function sortearRuna() {
+      selectedRune = runesList[Math.floor(Math.random() * runesList.length)];
+      document.getElementById('rune-display').textContent = selectedRune.glyph;
+      document.getElementById('rune-name').textContent = selectedRune.name;
+      playChime(528, 1.2);
+    }
+    function sendRuneToChat() {
+      closeModal('modal-runes');
+      switchToChat();
+      sendMessage(`Retirei a Runa Nórdica sagrada: **${selectedRune.name}**. Que ensinamento ancestral ela tem para me guiar?`);
+    }
+
+    // LENORMAND (BARALHO CIGANO)
+    const lenormandDeck = [
+      { name: "O Cavaleiro", icon: "🐎" }, { name: "O Trevo", icon: "🍀" },
+      { name: "O Navio", icon: "⛵" }, { name: "A Casa", icon: "🏡" },
+      { name: "A Âncora", icon: "⚓" }, { name: "Os Pássaros", icon: "🕊️" },
+      { name: "O Coração", icon: "💖" }, { name: "A Chave", icon: "🗝️" }
+    ];
+    let lenormandHand = [];
+
+    function openLenormandModal() {
+      sortearLenormand();
+      openModal('modal-lenormand');
+    }
+    function sortearLenormand() {
+      const shuffled = [...lenormandDeck].sort(() => 0.5 - Math.random());
+      lenormandHand = shuffled.slice(0, 3);
+      const container = document.getElementById('lenormand-cards');
+      container.innerHTML = lenormandHand.map((c, idx) => `
+        <div>
+          <span>${c.icon}</span>
+          <p style="font-size: 0.75rem; font-weight: bold; margin-top: 4px;">${idx === 0 ? 'Passado' : idx === 1 ? 'Presente' : 'Futuro'}</p>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">${c.name}</p>
+        </div>
+      `).join('');
+      playChime(639, 1.4);
+    }
+    function sendLenormandToChat() {
+      closeModal('modal-lenormand');
+      switchToChat();
+      const names = lenormandHand.map(c => c.name).join(' + ');
+      sendMessage(`Tirei as 3 lâminas do Baralho Cigano: **${names}** (Passado, Presente e Futuro). Como Zéfiro interpreta essa sequência?`);
+    }
+
+    // CHAKRAS & ARCANJOS
+    function openChakrasModal() { openModal('modal-chakras'); }
+    function consultarChakra(nome) {
+      closeModal('modal-chakras');
+      switchToChat();
+      sendMessage(`Como harmonizar o meu **${nome}**? Quais sintomas de desequilíbrio e quais cristais e frequências ativam esse portal?`);
+    }
+
+    function openArchangelsModal() { openModal('modal-archangels'); }
+    function consultarArcanjo(nome) {
+      closeModal('modal-archangels');
+      switchToChat();
+      sendMessage(`Invoco a presença de **${nome}**. Peço uma oração sagrada e um decreto de blindagem espiritual.`);
+    }
+
+    // RÁPIDOS (BOLA, PÊNDULO, BISCOITO, CAFÉ, I CHING)
+    function askCrystalBall() {
+      const answers = [
+        "A visão reluz límpida: **SIM, com certeza cósmica**.",
+        "As névoas alertam para o **NÃO**. Há perigos ocultos.",
+        "O cosmos pede **espera e silêncio**. As forças ainda disputam a resposta.",
+        "Há uma **virada de destino inesperada** nos próximos 7 dias. Confie."
+      ];
+      switchToChat();
+      appendMessage(`🔮 **Visão da Bola de Cristal:**\n\n${answers[Math.floor(Math.random() * answers.length)]}`, 'oracle');
+      playChime(741, 1.8);
+    }
+
+    function askPendulum() {
+      const answers = [
+        "O pêndulo gira firme em sentido horário: **AFIRMAÇÃO ABSOLUTA (SIM)**.",
+        "O pêndulo oscila em linha reta contrária: **NEGAÇÃO (NÃO)**.",
+        "O pêndulo permanece trêmulo no centro: **CAMPO INDEFINIDO / RECOLHA-SE**."
+      ];
+      switchToChat();
+      appendMessage(`🪬 **Oscilação do Pêndulo:**\n\n${answers[Math.floor(Math.random() * answers.length)]}`, 'oracle');
+      playChime(432, 1.5);
+    }
+
+    function breakFortuneCookie() {
+      const fortunes = [
+        "“Aquele que respeita a maré baixa não se afoga na maré alta.”",
+        "“Uma porta que parecia trancada cederá ao toque suave da paciência.”",
+        "“O ouro mais brilhante está sendo forjado nas suas horas de silêncio.”",
+        "“Não temas podar o galho seco; a primavera exige espaço para florescer.”"
+      ];
+      switchToChat();
+      appendMessage(`🥠 **Mensagem do Biscoito Cósmico:**\n\n${fortunes[Math.floor(Math.random() * fortunes.length)]}`, 'oracle');
+      playChime(528, 1.5);
+    }
+
+    function readCoffeeCup() {
+      const reads = [
+        "Na borda da xícara formou-se um **Pássaro alçando voo**: notícias distantes trarão alívio financeiro.",
+        "No fundo da xícara vê-se uma **Montanha escarpada**: um desafio de paciência que terminará em consagração.",
+        "No meio da borra surge uma **Chave dourada**: você receberá uma resposta que encerra uma longa espera."
+      ];
+      switchToChat();
+      appendMessage(`☕ **Leitura da Cafeomancia:**\n\n${reads[Math.floor(Math.random() * reads.length)]}`, 'oracle');
+      playChime(639, 1.6);
+    }
+
+    function openIChingModal() {
+      const hexagrams = [
+        "Hexagrama 1 - Ch'ien (O Criativo / Céu sobre Céu): Força primordial e poder.",
+        "Hexagrama 2 - K'un (O Receptivo / Terra sobre Terra): Suavidade, acolhimento e dedicação.",
+        "Hexagrama 29 - K'an (O Abismo / Água sobre Água): Cautela e persistência nas correntes bravias.",
+        "Hexagrama 30 - Li (A Chama / Fogo sobre Fogo): Iluminação, clareza e fidelidade ao bem."
+      ];
+      switchToChat();
+      const sorteado = hexagrams[Math.floor(Math.random() * hexagrams.length)];
+      sendMessage(`Joguei as moedas do I Ching e manifestou-se o **${sorteado}**. Qual o conselho do Livro das Mutações para meus passos?`);
+    }
+
+    /* =========================================================
+       6. ESTRELAS DE FUNDO
+    ========================================================= */
+    const canvas = document.getElementById('stars-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      stars = [];
+      const count = Math.floor((canvas.width * canvas.height) / 9000);
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.4,
+          a: Math.random() * 0.7 + 0.2,
+          step: Math.random() * 0.015 + 0.005,
+          grow: Math.random() > 0.5
+        });
+      }
+    }
+
+    function animateStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let s of stars) {
+        if (s.grow) {
+          s.a += s.step;
+          if (s.a >= 0.85) s.grow = false;
+        } else {
+          s.a -= s.step;
+          if (s.a <= 0.15) s.grow = true;
+        }
+        ctx.fillStyle = `rgba(184, 134, 11, ${s.a * 0.5})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(animateStars);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animateStars();
+  </script>
+</body>
+</html>
