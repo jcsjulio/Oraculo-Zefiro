@@ -8,7 +8,7 @@
   <!-- Fontes Místicas Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700&family=Marcellus&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@600;700;800&family=Marcellus&display=swap" rel="stylesheet">
   
   <!-- Markdown Parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -41,9 +41,9 @@
     body {
       background-color: var(--bg-space);
       background-image: 
-        radial-gradient(circle at 15% 20%, rgba(94, 39, 128, 0.4) 0%, transparent 45%),
+        radial-gradient(circle at 15% 20%, rgba(94, 39, 128, 0.45) 0%, transparent 45%),
         radial-gradient(circle at 85% 75%, rgba(44, 11, 69, 0.5) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(13, 8, 26, 0.95) 0%, #06040d 100%);
+        radial-gradient(circle at 50% 50%, rgba(13, 8, 26, 0.96) 0%, #06040d 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -64,7 +64,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1080px;
+      max-width: 1100px;
       height: 94vh;
       max-height: 920px;
       margin: 16px;
@@ -75,7 +75,7 @@
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       border-radius: var(--radius);
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 30px var(--gold-glow);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.85), 0 0 30px var(--gold-glow);
       overflow: hidden;
     }
 
@@ -85,13 +85,15 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.92);
+      flex-shrink: 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
+      cursor: pointer;
     }
 
     .brand-icon {
@@ -107,8 +109,8 @@
 
     .brand h1 {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 1.3rem;
-      letter-spacing: 2px;
+      font-size: 1.28rem;
+      letter-spacing: 1.8px;
       color: var(--purple-dark);
     }
 
@@ -161,7 +163,6 @@
       display: flex;
     }
 
-    /* TELA 1: SANTUÁRIO */
     .portal-view {
       overflow-y: auto;
       padding: 24px;
@@ -189,7 +190,7 @@
 
     .portal-hero h2 {
       font-family: 'Cinzel', serif;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       color: var(--purple-dark);
       margin-bottom: 6px;
     }
@@ -197,15 +198,16 @@
     .portal-hero p {
       font-size: 0.92rem;
       color: var(--text-muted);
-      max-width: 620px;
+      max-width: 640px;
       margin: 0 auto 16px auto;
+      line-height: 1.5;
     }
 
     .btn-roulette {
       background: linear-gradient(135deg, #7b1fa2, var(--purple-dark));
       color: #fff;
       border: 2px solid var(--gold);
-      padding: 13px 30px;
+      padding: 13px 32px;
       border-radius: 30px;
       font-size: 1rem;
       font-weight: 700;
@@ -218,7 +220,7 @@
     }
 
     .btn-roulette:hover {
-      transform: scale(1.05);
+      transform: scale(1.04);
       box-shadow: 0 8px 25px var(--gold-glow);
     }
 
@@ -298,14 +300,14 @@
       line-height: 1.4;
     }
 
-    /* TELA 2: CÂMARA DE DIÁLOGO */
     .chat-subhead {
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.94);
       border-bottom: 1.5px solid var(--panel-border);
       padding: 10px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-shrink: 0;
     }
 
     .btn-back-hub {
@@ -368,12 +370,18 @@
       font-size: 0.96rem;
     }
 
-    /* Balão do Usuário */
+    /* USER BUBBLE: High contrast white and radiant gold highlights */
     .user .bubble {
       background: linear-gradient(135deg, var(--purple), var(--purple-dark));
       color: #ffffff !important;
       border-bottom-right-radius: 4px;
       box-shadow: 0 4px 16px rgba(106, 27, 154, 0.25);
+    }
+
+    .user .bubble p,
+    .user .bubble span,
+    .user .bubble div {
+      color: #ffffff !important;
     }
 
     .user .bubble strong,
@@ -383,12 +391,7 @@
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
-    .user .bubble p,
-    .user .bubble span {
-      color: #ffffff !important;
-    }
-
-    /* Balão do Oráculo */
+    /* ORACLE BUBBLE */
     .oracle .bubble {
       background: #ffffff;
       color: var(--text-main);
@@ -397,8 +400,6 @@
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     }
 
-    .oracle .bubble p { margin-bottom: 10px; }
-    .oracle .bubble p:last-child { margin-bottom: 0; }
     .oracle .bubble strong { color: var(--purple-dark); font-weight: 700; }
     .oracle .bubble blockquote {
       border-left: 3px solid var(--gold);
@@ -407,6 +408,9 @@
       color: var(--text-muted);
       font-style: italic;
     }
+
+    .bubble p { margin-bottom: 10px; }
+    .bubble p:last-child { margin-bottom: 0; }
 
     .meta {
       font-size: 0.72rem;
@@ -437,6 +441,7 @@
       display: flex;
       gap: 12px;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .input-box {
@@ -478,7 +483,6 @@
       filter: brightness(1.1);
     }
 
-    /* MODAIS */
     .modal {
       position: fixed;
       inset: 0;
@@ -529,12 +533,34 @@
       cursor: pointer;
       font-size: 0.95rem;
       width: 100%;
-      margin-top: 12px;
+      margin-top: 10px;
       transition: all 0.25s;
     }
     .btn-action:hover {
       filter: brightness(1.08);
       box-shadow: 0 4px 14px var(--gold-glow);
+    }
+
+    .btn-secondary {
+      background: var(--purple-light);
+      color: var(--purple-dark);
+      border: 1.5px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.9rem;
+      width: 100%;
+      margin-top: 8px;
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-secondary:hover {
+      background: var(--gold-light);
+      border-color: var(--gold);
     }
 
     .field { margin-bottom: 14px; }
@@ -560,7 +586,7 @@
       border-color: var(--gold);
     }
 
-    /* CARD TAROT */
+    /* CARD TAROT 3D */
     .tarot-card-box {
       width: 160px;
       height: 250px;
@@ -606,7 +632,7 @@
       transform: rotateY(180deg);
     }
 
-    /* BÚZIOS */
+    /* BÚZIOS ALTAR */
     .buzios-altar {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -634,6 +660,15 @@
       border-color: #4a361c;
     }
 
+    #test-status-box {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .app-viewport {
         margin: 0;
@@ -649,11 +684,13 @@
 </head>
 <body>
 
+  <!-- Background Canvas: Twinkling Space Particles -->
   <canvas id="stars-canvas"></canvas>
 
   <div class="app-viewport">
+    <!-- Header -->
     <header>
-      <div class="brand">
+      <div class="brand" onclick="switchToHub()">
         <div class="brand-icon">✹</div>
         <div>
           <h1>ORÁCULO ZÉFIRO</h1>
@@ -672,7 +709,7 @@
       <div class="portal-view">
         <div class="portal-hero">
           <h2>Bem-vindo aos Portais do Destino</h2>
-          <p>Escolha um oráculo sagrado para iluminar suas escolhas ou entregue-se à sabedoria do universo através da roleta:</p>
+          <p>Escolha um oráculo sagrado para iluminar suas escolhas ou entregue-se à sabedoria do universo através da roleta cósmica:</p>
           <button class="btn-roulette" onclick="triggerRoulette()">
             <span>🎲</span> ROLETA DO DESTINO (RITUAL ALEATÓRIO)
           </button>
@@ -719,7 +756,7 @@
           <div class="portal-grid">
             <div class="portal-card" onclick="openPalmistryModal()">
               <div class="card-head"><span class="icon">✋</span><h4>Quiromancia Virtual</h4></div>
-              <p>Leitura das linhas da Vida, Cabeça, Coração e Monte de Vênus.</p>
+              <p>Leitura das marcas das mãos: Linhas da Vida, Cabeça, Coração e Monte de Vênus.</p>
             </div>
             <div class="portal-card" onclick="openNumerologyModal()">
               <div class="card-head"><span class="icon">🔢</span><h4>Numerologia da Alma</h4></div>
@@ -781,7 +818,7 @@
             </div>
             <div class="portal-card" onclick="askPendulum()">
               <div class="card-head"><span class="icon">🪬</span><h4>Pêndulo Sagrado</h4></div>
-              <p>Oscilação física de radiestesia para confirmação e certeza energética.</p>
+              <p>Oscilação de radiestesia para confirmação e certeza energética.</p>
             </div>
             <div class="portal-card" onclick="breakFortuneCookie()">
               <div class="card-head"><span class="icon">🥠</span><h4>Biscoito Cósmico</h4></div>
@@ -800,7 +837,7 @@
       </div>
     </main>
 
-    <!-- TELA 2: CÂMARA DE CHAT -->
+    <!-- TELA 2: CÂMARA DE DIÁLOGO -->
     <main class="screen" id="screen-chat">
       <div class="chat-subhead">
         <button class="btn-back-hub" onclick="switchToHub()">← Escolher Outro Ritual</button>
@@ -834,12 +871,12 @@
       <button class="modal-close" onclick="closeModal('modal-settings')">✕</button>
       <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 8px;">⚙️ Conexão Cósmica (Gemini API)</h2>
       <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px;">
-        Sua chave fica salva com total privacidade apenas no seu próprio navegador via <code>localStorage</code>.
+        Para rodar diretamente no seu GitHub Pages, informe sua chave. Ela fica guardada exclusivamente no seu próprio navegador via <code>localStorage</code>.
       </p>
 
       <div style="background: var(--gold-light); border: 1.5px solid var(--gold); border-radius: 10px; padding: 14px; margin-bottom: 16px;">
         <p style="font-size: 0.82rem; color: var(--gold-dark); margin-bottom: 8px; font-weight: 700;">
-          Obtenha sua chave gratuita no Google AI Studio:
+          Obtenha sua chave gratuita em segundos no Google AI Studio:
         </p>
         <a href="https://aistudio.google.com/app/apikey" target="_blank" style="display: block; text-align: center; background: var(--purple-dark); color: #fff; text-decoration: none; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
           🔑 Criar Chave no Google AI Studio
@@ -847,19 +884,21 @@
       </div>
 
       <div class="field">
-        <label>Chave da API (Gemini)</label>
+        <label>Chave da API (Google Gemini)</label>
         <input type="password" id="input-api-key" placeholder="AIzaSy...">
       </div>
 
       <div class="field">
         <label>Modelo Astral Ativo</label>
         <select id="select-model">
-          <option value="gemini-3.6-flash">Gemini 3.6 Flash (Padrão Atual & Recomendado)</option>
+          <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash-Lite (Ultra Rápido & Leve)</option>
+          <option value="gemini-2.5-flash">Gemini 2.5 Flash (Padrão Completo)</option>
+          <option value="gemini-2.0-flash">Gemini 2.0 Flash (Alternativo)</option>
         </select>
       </div>
 
-      <button class="btn-action" style="background: #4a148c; margin-bottom: 6px;" onclick="testApiConnection()">⚡ Testar Conexão com a API</button>
-      <div id="test-connection-result" style="font-size: 0.82rem; margin: 6px 0 10px 0; text-align: center; font-weight: bold;"></div>
+      <button class="btn-secondary" id="btn-test-key" onclick="testGeminiConnection()">⚡ Testar Conexão com a API</button>
+      <div id="test-status-box"></div>
 
       <button class="btn-action" onclick="saveSettings()">Salvar & Harmonizar</button>
     </div>
@@ -891,7 +930,7 @@
     <div class="modal-content" style="text-align: center;">
       <button class="modal-close" onclick="closeModal('modal-buzios')">✕</button>
       <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark);">🐚 Lançamento dos 4 Búzios</h2>
-      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 12px;">Invoque as bênçãos dos elementos da terra e das águas:</p>
+      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 12px;">Invoque as bênçãos das conchas sagradas:</p>
 
       <div class="buzios-altar">
         <div class="buzio-shell" id="bz1">?</div>
@@ -1012,7 +1051,7 @@
     <div class="modal-content">
       <button class="modal-close" onclick="closeModal('modal-numerology')">✕</button>
       <h2 style="font-family: 'Cinzel', serif; color: var(--purple-dark); margin-bottom: 10px;">🔢 Numerologia da Alma</h2>
-      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 12px;">Os números são os blocos geométricos da Criação:</p>
+      <p style="font-size: 0.86rem; color: var(--text-muted); margin-bottom: 12px;">Os números regem as frequências sagradas do universo:</p>
       
       <div class="field">
         <label>Nome Completo de Registro</label>
@@ -1066,7 +1105,7 @@
       <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
         <button class="btn-action" style="margin-top:0; background: #6a1b9a;" onclick="consultarCristal('Ametista (Transmutação, intuição e paz espiritual)')">💜 Ametista</button>
         <button class="btn-action" style="margin-top:0; background: #e91e63;" onclick="consultarCristal('Quartzo Rosa (Amor incondicional e cura cardíaca)')">💗 Quartzo Rosa</button>
-        <button class="btn-action" style="margin-top:0; background: #212121;" onclick="consultarCristal('Turmalina Negra (Escudo impenetrável contra inveja)')">🖤 Turmalina Negra</button>
+        <button class="btn-action" style="margin-top:0; background: #212121;" onclick="consultarCristal('Turmalina Negra (Escudo contra energias densas)')">🖤 Turmalina Negra</button>
         <button class="btn-action" style="margin-top:0; background: #f57f17;" onclick="consultarCristal('Citrino Natural (Prosperidade solar e vitalidade)')">💛 Citrino</button>
         <button class="btn-action" style="margin-top:0; background: #0288d1;" onclick="consultarCristal('Água-Marinha (Calma, fluidez e serenidade)')">💙 Água-Marinha</button>
         <button class="btn-action" style="margin-top:0; background: #2e7d32;" onclick="consultarCristal('Quartzo Verde (Saúde, cura física e renovação)')">💚 Quartzo Verde</button>
@@ -1149,37 +1188,32 @@
     </div>
   </div>
 
-  <!-- ==================== JAVASCRIPT ==================== -->
   <script>
     /* =========================================================
-       1. ESTADO & MIGRAÇÃO AUTOMÁTICA DE MODELO
+       1. ESTADO & CONSTANTES
     ========================================================= */
     const STORAGE_KEY = 'zefiro_gemini_api_key';
     const STORAGE_MODEL = 'zefiro_gemini_model';
 
     let apiKey = (localStorage.getItem(STORAGE_KEY) || '').trim();
-    let currentModel = localStorage.getItem(STORAGE_MODEL) || 'gemini-3.6-flash';
-
-    // Migração: se o navegador guardou 2.5 ou 1.5, atualiza na hora para gemini-3.6-flash
-    if (!currentModel || currentModel.includes('2.5') || currentModel.includes('1.5') || currentModel.includes('2.0')) {
-      currentModel = 'gemini-3.6-flash';
-      localStorage.setItem(STORAGE_MODEL, currentModel);
-    }
+    // Default model directly prioritized to flash-lite
+    let currentModel = localStorage.getItem(STORAGE_MODEL) || 'gemini-2.5-flash-lite';
 
     let chatHistory = [];
     let audioCtx = null;
     let soundEnabled = true;
 
-    const SYSTEM_INSTRUCTION = `Você é Zéfiro, um mestre espiritual ancestral, sábio e astrólogo místico.
-DIRETRIZES MANDATÓRIAS:
-1. Responda SEMPRE em Português do Brasil de forma solene, poética, empática e acolhedora.
-2. NUNCA exiba checklists, notas de bastidores ou resumos em inglês.
-3. Fale DIRETAMENTE na primeira pessoa como o guardião Zéfiro ("Alma querida...", "Os ventos me sussurram...", etc.).
-4. Lembre que o livre-arbítrio comanda as decisões humanas e que os oráculos revelam correntes e tendências.
-5. Use formatação Markdown elegante (negritos, parágrafos fluidos e citações).`;
+    // Strict persona definition in Brazilian Portuguese
+    const SYSTEM_INSTRUCTION = `Você é Zéfiro, um mestre espiritual ancestral, sábio e astrólogo cósmico.
+DIRETRIZES ABSOLUTAS:
+1. Responda SEMPRE em Português do Brasil com tom solene, poético, empático e acolhedor.
+2. NUNCA exiba anotações de bastidores, checklists, resumos internos ou termos em inglês (como "Keywords:", "Symbolism:", etc.).
+3. Fale DIRETAMENTE na primeira pessoa como Zéfiro conversando com a alma consulente ("Alma querida...", "Os ventos cósmicos me revelam...", etc.).
+4. Lembre com clareza poética que o livre-arbítrio é soberano sobre qualquer inclinação oracular.
+5. Formate a leitura em Markdown elegante com parágrafos bem espaçados, negritos destacados e citações de sabedoria.`;
 
     /* =========================================================
-       2. ELEMENTOS DOM
+       2. ELEMENTOS DOM & INICIALIZAÇÃO
     ========================================================= */
     const screenHub = document.getElementById('screen-hub');
     const screenChat = document.getElementById('screen-chat');
@@ -1190,7 +1224,7 @@ DIRETRIZES MANDATÓRIAS:
     const thinkingText = document.getElementById('thinking-text');
     const inputApiKey = document.getElementById('input-api-key');
     const selectModel = document.getElementById('select-model');
-    const testResultEl = document.getElementById('test-connection-result');
+    const testStatusBox = document.getElementById('test-status-box');
 
     inputApiKey.value = apiKey;
     selectModel.value = currentModel;
@@ -1213,7 +1247,7 @@ DIRETRIZES MANDATÓRIAS:
     }
 
     /* =========================================================
-       3. SÍNTESE DE ÁUDIO
+       3. SÍNTESE DE ÁUDIO (Tigela Tibetana & Sino Cósmico)
     ========================================================= */
     function playChime(freq = 432, duration = 2.2) {
       if (!soundEnabled) return;
@@ -1246,23 +1280,32 @@ DIRETRIZES MANDATÓRIAS:
     });
 
     /* =========================================================
-       4. TESTE DE CONEXÃO DIRETO COM GOOGLE AI STUDIO
+       4. TESTE DE CONEXÃO DIRETO (GET /v1beta/models)
     ========================================================= */
-    async function testApiConnection() {
-      const keyToTest = inputApiKey.value.trim();
-      if (!keyToTest) {
-        testResultEl.style.color = '#c62828';
-        testResultEl.textContent = '❌ Por favor, informe sua chave antes de testar.';
+    async function testGeminiConnection() {
+      const testKey = inputApiKey.value.trim();
+      testStatusBox.style.display = 'block';
+      testStatusBox.style.background = '#fff8e1';
+      testStatusBox.style.border = '1px solid #ffd54f';
+      testStatusBox.style.color = '#795548';
+      testStatusBox.innerHTML = '⏳ Verificando autenticação e modelos ativos no Google AI Studio...';
+
+      if (!testKey) {
+        testStatusBox.style.background = '#ffebee';
+        testStatusBox.style.border = '1px solid #ef5350';
+        testStatusBox.style.color = '#c62828';
+        testStatusBox.innerHTML = '❌ Por favor, informe uma chave de API para testar.';
         return;
       }
 
-      testResultEl.style.color = 'var(--purple-dark)';
-      testResultEl.textContent = '⚡ Testando conexão com os servidores do Gemini...';
-
       try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(keyToTest)}`, {
+        const testUrl = `https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(testKey)}`;
+        const res = await fetch(testUrl, {
           method: 'GET',
-          headers: { 'x-goog-api-key': keyToTest }
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': testKey
+          }
         });
 
         const data = await res.json();
@@ -1272,34 +1315,55 @@ DIRETRIZES MANDATÓRIAS:
             .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes('generateContent'))
             .map(m => m.name.replace('models/', ''));
 
-          // Atualiza as opções do select com os modelos reais disponíveis para a chave
-          selectModel.innerHTML = '';
-          contentModels.forEach(mod => {
-            const opt = document.createElement('option');
-            opt.value = mod;
-            opt.textContent = mod;
-            if (mod === 'gemini-3.6-flash') opt.selected = true;
-            selectModel.appendChild(opt);
-          });
+          testStatusBox.style.background = '#e8f5e9';
+          testStatusBox.style.border = '1px solid #66bb6a';
+          testStatusBox.style.color = '#1b5e20';
+          testStatusBox.innerHTML = `✅ <strong>Conexão Perfeita!</strong> Chave autêntica. ${contentModels.length} modelos liberados para geração.`;
+          playChime(528, 1.5);
 
-          testResultEl.style.color = '#2e7d32';
-          testResultEl.textContent = `✅ Conexão ativa! ${contentModels.length} modelos liberados.`;
+          // Atualiza o select de modelos dinamicamente com os suportados
+          if (contentModels.length > 0) {
+            selectModel.innerHTML = '';
+            const priorityModels = ['gemini-2.5-flash-lite', 'gemini-2.5-flash', 'gemini-2.0-flash'];
+            const sortedModels = [
+              ...priorityModels.filter(m => contentModels.includes(m)),
+              ...contentModels.filter(m => !priorityModels.includes(m))
+            ];
+
+            sortedModels.forEach(m => {
+              const opt = document.createElement('option');
+              opt.value = m;
+              opt.textContent = m + (m === 'gemini-2.5-flash-lite' ? ' (Recomendado)' : '');
+              selectModel.appendChild(opt);
+            });
+
+            if (contentModels.includes('gemini-2.5-flash-lite')) {
+              selectModel.value = 'gemini-2.5-flash-lite';
+            } else if (contentModels.includes('gemini-2.5-flash')) {
+              selectModel.value = 'gemini-2.5-flash';
+            }
+          }
         } else {
-          testResultEl.style.color = '#c62828';
-          testResultEl.textContent = `❌ Recusado: ${data.error?.message || 'Chave inválida.'}`;
+          const errMsg = data.error?.message || `Erro HTTP ${res.status}: ${res.statusText}`;
+          testStatusBox.style.background = '#ffebee';
+          testStatusBox.style.border = '1px solid #ef5350';
+          testStatusBox.style.color = '#c62828';
+          testStatusBox.innerHTML = `❌ <strong>Recusado pela API:</strong><br>${errMsg}<br><small>Verifique se copiou a chave completa sem espaços extras.</small>`;
         }
       } catch (err) {
-        testResultEl.style.color = '#c62828';
-        testResultEl.textContent = `❌ Falha de rede: ${err.message}`;
+        testStatusBox.style.background = '#ffebee';
+        testStatusBox.style.border = '1px solid #ef5350';
+        testStatusBox.style.color = '#c62828';
+        testStatusBox.innerHTML = `❌ <strong>Falha na requisição:</strong> ${err.message}.`;
       }
     }
 
     /* =========================================================
-       5. CHAMADA GEMINI (MODERNA COM GEMINI-3.6-FLASH)
+       5. CHAMADA DIRETA AO GEMINI (SEM LISTAGEM TÉCNICA NO CHAT)
     ========================================================= */
     async function callGeminiDirect(promptText) {
       const cleanKey = apiKey.trim();
-      const selectedModel = currentModel || 'gemini-3.6-flash';
+      const selectedModel = currentModel || 'gemini-2.5-flash-lite';
 
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${encodeURIComponent(cleanKey)}`;
 
@@ -1329,24 +1393,23 @@ DIRETRIZES MANDATÓRIAS:
       const data = await response.json();
 
       if (!response.ok) {
-        const msg = data.error?.message || `Código de erro HTTP ${response.status}`;
-        throw new Error(msg);
+        const errorDetail = data.error?.message || `Erro HTTP ${response.status}: ${response.statusText}`;
+        throw new Error(errorDetail);
       }
 
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!reply) {
-        throw new Error('A resposta do oráculo veio vazia dos servidores.');
+      const resposta = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!resposta) {
+        throw new Error('O oráculo recebeu uma resposta sem conteúdo dos servidores cósmicos.');
       }
 
-      return reply;
+      return resposta;
     }
 
     async function sendMessage(textToSend = null) {
       const text = (textToSend !== null ? textToSend : userInput.value).trim();
       if (!text) return;
 
-      if (!apiKey) {
-        alert('Por favor, informe sua chave do Google Gemini nas configurações (⚙️).');
+      if (!apiKey || !apiKey.trim()) {
         openModal('modal-settings');
         return;
       }
@@ -1366,7 +1429,7 @@ DIRETRIZES MANDATÓRIAS:
         appendMessage(reply, 'oracle');
         playChime(528, 2.4);
       } catch (err) {
-        console.error('Erro na chamada Gemini:', err);
+        console.error('Detalhe do erro na API:', err);
         appendMessage(`⚠️ **Interrupção nas Linhas Astrais:**\n\n${err.message}\n\n*Dica: Clique na engrenagem ⚙️ acima e use o botão "⚡ Testar Conexão com a API" para verificar sua chave e modelo.*`, 'oracle');
       } finally {
         thinkingIndicator.style.display = 'none';
@@ -1401,7 +1464,12 @@ DIRETRIZES MANDATÓRIAS:
       }
     });
 
-    document.getElementById('btn-settings').addEventListener('click', () => openModal('modal-settings'));
+    document.getElementById('btn-settings').addEventListener('click', () => {
+      inputApiKey.value = apiKey;
+      selectModel.value = currentModel;
+      testStatusBox.style.display = 'none';
+      openModal('modal-settings');
+    });
 
     function saveSettings() {
       apiKey = inputApiKey.value.trim();
@@ -1409,7 +1477,7 @@ DIRETRIZES MANDATÓRIAS:
       localStorage.setItem(STORAGE_KEY, apiKey);
       localStorage.setItem(STORAGE_MODEL, currentModel);
       closeModal('modal-settings');
-      alert('Sintonização concluída com sucesso!');
+      playChime(528, 1.2);
     }
 
     function openModal(id) { document.getElementById(id).classList.add('active'); }
@@ -1422,7 +1490,7 @@ DIRETRIZES MANDATÓRIAS:
     }
 
     /* =========================================================
-       6. ROLETA DO DESTINO & INTERATIVIDADES
+       6. ROLETA DO DESTINO & RITUAIS INTERATIVOS
     ========================================================= */
     function triggerRoulette() {
       const allRituals = [
